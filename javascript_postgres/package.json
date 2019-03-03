@@ -1,0 +1,17 @@
+{
+  "name": "javascript_postgres",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js",
+    "fulltable": "node fullTable.js",
+    "asyncfulltable": "node asyncFullTable.js"
+  },
+  "author": "Hussein",
+  "license": "ISC",
+  "dependencies": {
+    "pg": "^7.8.0",
+    "pg-cursor": "^2.0.0"
+  }
+}

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Lazy load images with Fetch!</h1>
+    <button id = 'btnLoad'>Load</button>
+    <img id = 'img'>
+    <script>
+    const img = document.getElementById("img")
+    const btnLoad = document.getElementById("btnLoad");
+    btnLoad.addEventListener("click", async e => {
+
+        const r = await fetch("http://localhost:8080/test.png")
+        const b = await r.blob()
+        img.src = URL.createObjectURL(b)
+    } )
+
+    </script>
+</body>
+</html>

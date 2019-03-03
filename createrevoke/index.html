@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <button id = 'btnLoad'>Load</button>
+    <button id = 'btnUnload'>Unload</button>
+
+    <img src = "x" id = 'img1'>
+    <img src = "x" id = 'img2'>
+    <img src = "x" id = 'img3'>
+    <img src = "x" id = 'img4'>
+
+    <script>
+    const btnLoad = document.getElementById("btnLoad")
+    const btnUnload = document.getElementById("btnUnload")
+    const img1 = document.getElementById("img1")
+    const img2 = document.getElementById("img2")
+    const img3 = document.getElementById("img3")
+    const img4 = document.getElementById("img4")
+
+    const imgs = []
+    imgs.push(img1)
+    imgs.push(img2)
+    imgs.push(img3)
+    imgs.push(img4)
+    let objUrl = null;
+
+    imgs.forEach(i => i.addEventListener("click", e => e.target.src = objUrl))
+
+    btnUnload.addEventListener("click", e => URL.revokeObjectURL(objUrl))
+    
+    btnLoad.addEventListener("click", async e => {
+
+        const result = await fetch("http://localhost:8080/test.png")
+        const blob = await result.blob()
+        objUrl = URL.createObjectURL(blob)
+        alert(`object url created locally ${objUrl}`)
+
+    })
+    </script>
+</body>
+</html>

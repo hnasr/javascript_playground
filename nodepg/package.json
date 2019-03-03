@@ -1,0 +1,15 @@
+{
+  "name": "nodepg",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node .",
+    "list": "node listTable.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "pg": "^7.8.0"
+  }
+}

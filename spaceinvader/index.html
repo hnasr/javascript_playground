@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Space Invader game</title>
+    <style>
+    canvas {
+        background:black;
+    }
+
+    html,body {
+        margin:0;
+    }
+
+    </style>
+</head>
+<body>
+    <canvas></canvas>
+
+    <script>
+    const canvas = document.querySelector("canvas")
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const context = canvas.getContext("2d")
+    const sWidth = 150
+    const sHeight = 30
+    const offset = 30;
+    const sXLocation = canvas.width/2 - sWidth/2
+    const sYLocation = canvas.height - sHeight*2
+    context.fillStyle = "green"
+
+    context.fillRect(sXLocation,sYLocation,sWidth,sHeight)
+
+    for (let i = 0; sWidth - 2*offset*i > 0; i++)
+        context.fillRect(sXLocation + offset*i,sYLocation-offset*i,sWidth - 2*offset*i,offset*i)
+
+    </script>
+</body>
+</html>

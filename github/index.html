@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <button id = 'btnIssues'>Issues</button>
+ 
+    <button id = 'btnRepos'>Repos</button>
+
+    <button id = 'btnCommits'>Commits</button>
+
+    <div id = 'divResult'>
+
+    </div>
+
+    <script>
+     
+    const btnRepos = document.getElementById("btnRepos") 
+    
+    const btnIssues = document.getElementById("btnIssues")
+    const divResult = document.getElementById("divResult")
+    
+    //setup events
+    btnRepos.addEventListener("click", readRepos )
+    btnIssues.addEventListener("click", readIssues )
+    btnCommits.addEventListener("click", e=> readCommits())
+
+    async function readCommits(url="https://api.github.com/search/commits?q=repo:freecodecamp/freecodecamp author-date:2019-01-01..2020-01-01"){
+        
+        try { 
+            //clean
+            while(divResult.firstChild) divResult.removeChild(divResult.firstChild)
+            const response = await fetch(url, {
+                "method":"GET",
+                "headers": {
+                    "Accept" : "application/vnd.github.cloak-preview"
+                }
+            })
+            const link = response.headers.get("link")
+            const urls =link.split(",").map(a=> {
+                 return { "url":a.split(";")[0].replace("<","").replace(">",""), "title":a.split(";")[1] }
+                }
+                )
+             
+            const result = await response.json();
+            result.items.forEach(i=> {
+                divResult.appendChild(document.createTextNode(i.commit.message))
+                divResult.appendChild(document.createElement("br"))
+
+            })
+
+            urls.forEach(u => {
+                const btn = document.createElement("button")
+                btn.textContent = u.title;
+                btn.addEventListener("click", e => readCommits(u.url))
+                divResult.appendChild(btn)
+            })
+          
+            console.log(result);
+        }
+        catch(ex)
+        {
+            console.log(JSON.stringify(ex))
+        }
+
+    }
+    async function readRepos() {
+        
+        try {
+            //read repos that have more than 10000 stars 
+            const url = "https://api.github.com/search/repositories?q=stars:>40000"
+            const response = await fetch(url, {
+                "method" :"GET"
+            })
+            console.log(response.headers.get("link"))
+            const result = await response.json();
+             result.items.forEach(i => {
+                const anchor = document.createElement("a")
+                anchor.href = i.html_url;
+                anchor.textContent = i.full_name;
+                divRepos.appendChild(anchor)
+                divRepos.appendChild(document.createElement("br"))
+            })
+            console.log(result)
+
+        } 
+        catch(ex) {
+            console.log(JSON.stringify(ex))
+        }
+
+    }
+
+
+
+    async function readIssues() {
+        
+        try {
+            //read repos that have more than 10000 stars 
+            const url = "https://api.github.com/search/issues?q=repo:freecodecamp/freecodecamp author:thecodingaviator"
+            const response = await fetch(url, {
+                "method" :"GET"
+            })
+            console.log(response.headers.get("link"))
+            const result = await response.json();
+             result.items.forEach(i => {
+                divRepos.appendChild(document.createTextNode(i.title))
+                divRepos.appendChild(document.createElement("br"))
+            })
+            console.log(result)
+
+        } 
+        catch(ex) {
+            console.log(JSON.stringify(ex))
+        }
+
+    }
+     
+    
+    </script>
+</body>
+</html>

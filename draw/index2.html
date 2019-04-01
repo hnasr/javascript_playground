@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        canvas {
+            border: 8px dashed greenyellow;
+            background:black;
+            height:90%;
+            width:60%;
+            
+        }
+        html, body {
+            background:black;
+            margin:0; 
+            height:100%;
+            text-align:  center;
+        }
+    </style>
+</head>
+<body>
+    <canvas></canvas>
+
+    <script>
+    const cBattlefield = document.querySelector("canvas")
+    const context = cBattlefield.getContext("2d")
+    
+    class Battleship {
+        constructor (context, color = "red"){
+            this.context = context;
+            this.color = color;
+            this.w = 20;
+            this.h = 10; 
+        }
+        
+        center() {
+            this.x = this.context.canvas.width/2 - this.w;
+            this.y = this.context.canvas.height - this.h;
+        }
+        draw() {
+            this.context.fillStyle = this.color 
+            this.context.fillRect(this.x,this.y,this.w, this.h)
+        }
+    }
+
+    class Alien {
+        constructor (context, color = "purple") {
+            this.context = context;
+            this.color = color;
+            
+        }
+    }
+
+    //draw battleship
+    
+    const battleship = new Battleship(context, "red")
+    battleship.center();
+    battleship.draw()
+    
+    </script>
+</body>
+</html>

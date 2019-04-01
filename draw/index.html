@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        canvas {
+            border :1px solid black;
+        }
+        body {
+            margin: 0
+        }
+    </style>
+</head>
+<body>
+    <canvas id ='cBattlefield'></canvas>
+
+    <script>
+    const battlefield = document.querySelector("canvas")
+    battlefield.width = window.innerWidth
+    battlefield.height = window.innerHeight
+    
+    const context = battlefield.getContext("2d")
+    
+    
+    
+    class Alien {
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
+        }
+
+        moveLeft() {
+            this.x ++
+        }
+        moveRight() {
+            this.x --
+        }
+        draw(){
+            context.fillRect(this.x,this.y, 100,100)   
+        }
+
+    }
+
+    let x = 200
+    const alien = new Alien(200, 200)
+    draw()
+    
+    function draw(){
+        context.clearRect(0,0,window.innerWidth,window.innerHeight)
+        alien.moveLeft()
+        alien.draw()
+        requestAnimationFrame(draw)
+    }
+    </script>
+</body>
+</html>

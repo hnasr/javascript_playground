@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    canvas {
+        background:black;
+    }
+
+    body {
+        margin: 0;
+    }
+    
+    </style>
+</head>
+<body>
+    <canvas>
+
+    </canvas>
+
+    <script>
+    const canvas = document.querySelector("canvas")
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    const context = canvas.getContext("2d")
+
+    class Alien {
+        constructor(context, x,y){
+            this.x = x;
+            this.y = y;
+            this.xoffset = 5
+            this.yoffset = 0
+            this.context = context;
+            this.width = 100;
+            this.height = 100;
+            this.color = "red";
+        }
+        set (ox, oy) {
+            this.xoffset = ox;
+            this.yoffset = oy;
+        }
+        move () {
+            this.x += this.xoffset;
+            this.y += this.yoffset;
+
+
+            if (this.x +  this.width > this.context.canvas.width || this.x < 0) 
+                    this.xoffset *= -1;
+            
+
+            if (this.y +  this.height > this.context.canvas.height || this.y < 0) 
+                this.yoffset *= -1;
+            
+        }
+
+        draw() {
+            context.fillStyle = this.color;
+            context.fillRect(this.x,this.y, this.width, this.height)
+        }
+    }
+
+const alien = new Alien(context, canvas.width/2, canvas.height/2)
+const alien2 = new Alien(context, canvas.width/2, canvas.height/2)
+alien2.color = "green"
+let inputs = []
+
+let f = 0; 
+
+//60 frame per sec
+let startExecuting = false;
+let inputcount = 0;
+animate()
+
+function animate() {
+    requestAnimationFrame(animate);
+    
+    context.clearRect(0,0, canvas.width, canvas.height)
+    //alien.move()
+    alien.draw();
+    alien2.draw();
+    
+    if (startExecuting )
+    {   
+        if (inputcount < inputs.length) {
+            const k = inputs [inputcount++]
+            if (k.key === "w")
+                k.obj.set(0, -5);
+            
+            if (k.key === "s")
+                k.obj.set(0, 5)
+            
+            if (k.key === "a")
+                k.obj.set(-5, 0)
+            
+            if (k.key === "d")
+                k.obj.set(5, 0)
+
+            k.obj.move();
+        }
+        else
+        {
+            inputs =[]; //clear input
+            inputcount = 0;
+            startExecuting = false;
+        }
+            
+    } 
+
+    //we will execute the inputs each 5 frames 
+    f++
+    if (f % 1 === 0)
+    {   
+        //good we collected the inputs execute each input on the next frame until done 
+        startExecuting = true;
+ 
+        f = 0;
+    }
+}
+    
+    function alienTimer(){
+
+        inputs.push({obj: alien2, key: "d"})
+        setTimeout(alienTimer, 10)
+
+    }
+    alienTimer();
+    document.addEventListener("keypress", e => inputs.push({obj: alien, key: e.key}))
+    </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+ 
+<script>
+ 
+
+function dodat(onsuccess, onerror) {
+
+    //do your code..
+    const n = parseInt(Math.random()*1000)
+    if (n % 2 == 0)
+        setTimeout(() => onsuccess(n), 1000);
+    else
+        setTimeout(() => onerror(n), 1000);
+
+}
+
+
+function dodat2() {
+    return new Promise((resolve, reject) => {
+    
+        //do your code..
+        const n = parseInt(Math.random()*1000)
+        if (n % 2 == 0)
+            setTimeout(() => resolve(n), 1000);
+        else
+            setTimeout(() => reject(n), 1000);
+        });
+}
+
+dodat2()
+.then(e => {console.log(`Success! ${e}`); return dodat2()})
+.then(e => console.log(`successtwice!!! ${e}`))
+.catch(e => console.error(`errrorooor ${e}`))
+.finally(e => console.log("finally execute me.."))
+</script>
+
+
+</body>
+</html>

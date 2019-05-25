@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        async function addCache() {
+            try {
+                const cache = await caches.open("test"); 
+                await cache.add("index.html")
+                await cache.add("https://api.github.com", {
+                    method: "GET"
+                })
+
+                console.log(`added`)
+            }
+            catch(ex) {
+                console.log(`error ${ex}`)
+            }
+            finally {
+                console.log("Finally done.")
+            }
+            
+
+        }
+
+          
+
+        async function getCache() {
+            try {
+                const cache = await caches.open("test"); 
+                const res = await cache.match("https://api.github.com")
+                const json = await res.json();
+                console.log(json)
+            }
+            catch(ex) {
+                console.log(`error ${ex}`)
+            }
+            finally {
+                console.log("Finally done.")
+            }
+
+        }
+    </script>
+    
+</body>
+</html>

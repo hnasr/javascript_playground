@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id = 'myCanvas'></canvas>
+    <script>
+    const pi = Math.PI;
+    const c = document.getElementById("myCanvas");
+  
+    c.width = window.innerWidth;
+    c.height= window.innerHeight;
+
+    const ctx = c.getContext("2d");
+    c.style.background = "gray"
+    const x = window.innerWidth/2;
+    const y = window.innerHeight/2;
+
+
+    drawSlice(100, 200,  pi, 1.59*pi, "green", "Black");
+    drawSlice(100, 200, 1.6*pi, 1.7*pi, "rgba(255, 0, 0, 0.1)");
+    drawSlice(100, 200, 1.7*pi, 1.99*pi, "rgba(0, 255, 0, 0.1)" );
+
+    function drawSlice(innerRadius, outerRadious, fromAngle, toAngle, color, strikeColor=color) {
+       
+        ctx.beginPath();
+        ctx.arc(x, y, innerRadius, fromAngle,  toAngle);
+        ctx.arc(x, y, outerRadious, toAngle,  fromAngle, 1 );
+        ctx.arc(x, y, innerRadius, fromAngle,  fromAngle);
+
+        ctx.strokeStyle = strikeColor
+        ctx.fillStyle = color
+        ctx.fill();
+
+        ctx.stroke();
+        ctx.closePath();
+        
+        const x2 = outerRadious * Math.cos(fromAngle) + x
+        const y2 = outerRadious * Math.sin(fromAngle) + y
+
+        const x3 = outerRadious *  Math.cos(toAngle) + x 
+        const y3  = outerRadious * Math.sin(toAngle) + y
+
+        const centerX = (x2+x3)/2 
+        const centerY = (y2+y3)/2
+
+        //draw text
+        ctx.fillStyle = "black"
+        ctx.save();
+        ctx.translate(centerX, centerY);
+        ctx.rotate(-(1/4)*pi);
+        ctx.textAlign = "center";
+        ctx.fillText("Your Label Here", 0, 0);
+        ctx.restore();
+       
+
+    }    
+        
+        
+    </script>
+</body>
+</html>

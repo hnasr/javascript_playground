@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>MY BEST TODO APP EVER</h1>
+    <ol id = 'olTodo'>
+
+    </ol>
+    <button id = 'btnCreate'>Add ToDO!</button>
+    <script>
+
+    const btnCreate = document.getElementById("btnCreate")
+    btnCreate.addEventListener("click", async e=> {
+                    const jsonRequest = {}
+                    jsonRequest.todo = prompt("Enter your todo item!")
+                    const result = await fetch("http://localhost:8080/todos", {method: "POST", 
+                    headers: {"content-type": "application/json"}, body: JSON.stringify(jsonRequest) })
+                    const success = await result.json();
+                    readTodos()
+                    alert("CREATED! ")
+
+     })
+    readTodos();
+    async function readTodos() {
+
+        try{
+            const olTodo = document.getElementById("olTodo")
+            while(olTodo.firstChild) olTodo.removeChild(olTodo.firstChild)
+
+            const result = await fetch("http://localhost:8080/todos", {method:"GET"})
+            const todos = await result.json();
+            todos.forEach(t=>{
+
+                const li = document.createElement("li")
+                li.textContent = t.text;
+                li.id = t.id;
+                li.addEventListener("click", async e => {
+                    const jsonRequest = {}
+                    jsonRequest.id = e.target.id;
+                    const result = await fetch("http://localhost:8080/todos", {method: "DELETE", 
+                    headers: {"content-type": "application/json"}, body: JSON.stringify(jsonRequest) })
+                    const success = await result.json();
+                    readTodos();
+                    alert("Deleted! ")
+                })
+                olTodo.appendChild(li)
+            })
+        }
+        catch (e) {
+            console.log("Error reading the todos.")
+        }
+
+    }
+    </script>
+</body>
+</html>

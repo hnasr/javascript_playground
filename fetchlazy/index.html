@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">/    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
@@ -35,7 +34,7 @@ btnUnload.addEventListener("click", e => {
 })
 btnLoad.addEventListener("click", async e => {
 
-const result = await fetch("http://localhost:8081/test.png")
+const result = await fetch("http://localhost:8080/test.png")
 const blob = await result.blob()
 objUrl = URL.createObjectURL(blob)
 alert(`Image loaded! The size of your image is ${blob.size} Object url ${objUrl}`)

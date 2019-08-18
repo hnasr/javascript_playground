@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Cookie test</title>
+</head>
+<body>
+    <button id = 'btnLogin'>Login</button>
+    <div id = 'divText'></div>
+    <script>
+    const btnLogin = document.getElementById("btnLogin")
+    const divText = document.getElementById("divText")
+    //user=Hussein
+    if (document.cookie){
+        const user = document.cookie.split("=")[1];
+        btnLogin.style.display = "none"
+        divText.textContent = `Hello, ${user}, I know who you are!`
+    }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "name": "zombie-cookie",
+  "version": "1.0.0",
+  "description": "",
+  "main": "zombie-cookie.js",
+  "scripts": {
+    "zombie": "node zombie-cookie.js",
+    "normal": "node normal-cookie.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

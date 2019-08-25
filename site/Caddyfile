@@ -1,0 +1,10 @@
+localhost:8080 {
+  root site1/
+
+}
+
+
+localhost:8081 {
+  root site2/
+
+}

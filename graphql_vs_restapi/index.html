@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>GraphQL vs REST</title>
+</head>
+<body>
+    <h1>Example of getting a pull request by number, all its commits, comments and reviews</h1>
+    <button id = 'btnREST'>query with REST</button>
+    <button id = 'btnGraph'>query with GraphQL</button>
+    <div id = 'divRes'></div>
+    <script>
+        const token = "ad7ee8e1a6573ad75e967507c8a87b543cdefc2f";
+        const url = "https://api.github.com/repos/freecodecamp/freecodecamp/pulls/36735"
+        const divRes = document.getElementById("divRes");
+        const btnRest = document.getElementById("btnREST");
+        const btnGraph = document.getElementById("btnGraph");
+        btnRest.addEventListener("click", queryREST)
+        btnGraph.addEventListener("click", queryGraph)
+
+        async function queryREST(){
+            let res;
+            res = await fetch(url, {headers: {"Authorization": `Token ${token}`}})
+            const pr = await res.json();
+
+            res = await fetch(`${url}/commits`, {headers: {"Authorization": `Token ${token}`}})
+            const commits = await res.json();
+
+            res = await fetch(`${url}/comments`, {headers: {"Authorization": `Token ${token}`}})
+            const comments = await res.json();
+
+            res = await fetch(`${url}/reviews`, {headers: {"Authorization": `Token ${token}`}})
+            const reviews = await res.json();
+            
+            print(commits,comments,reviews)
+ 
+        }
+
+        async function  queryGraph(){
+
+            const q = `
+            {
+  repository(owner: "freecodecamp", name: "freecodecamp") {
+    pullRequest(number: 36735) {
+      commits(first: 10) {
+        nodes {
+            commit {
+              id
+            }
+        }
+      }
+      comments(first: 10) {
+        nodes {
+            body
+        }
+      }
+      reviews(first: 10) {
+        nodes {
+          id
+        }
+      }
+    }
+  }
+}
+
+
+`
+
+        const result = await fetch("https://api.github.com/graphql", 
+                {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Token ${token}`,
+                        "Content-Type": "application/json"
+                    },
+                    body : JSON.stringify({
+                        query: q
+                    })
+                }
+             )
+        
+        const res = await result.json();
+        const pr = res.data.repository.pullRequest;
+        const commits = pr.commits.nodes.map(c => {
+            c.node_id = c.commit.id
+            return c;
+        })
+
+        const comments = pr.comments.nodes.map(c => {
+            const a = {}
+            a.body = c.body
+            return a;
+        })
+
+        const reviews = pr.reviews.nodes.map(c => {
+            const a = {}
+            a.id = c.id
+            return a;
+        })
+ 
+        print(commits,comments, reviews);
+        
+            
+        }
+
+
+
+        function print(commits, comments, reviews){
+
+            while(divRes.firstChild) divRes.removeChild(divRes.firstChild)
+            const list = document.createElement("ul");
+            //list of commits
+            const liCommits = document.createElement("li");
+            liCommits.textContent = "Commits";
+            commits.forEach(c => {
+                const li = document.createElement("li")
+                li.textContent = c.node_id;
+                liCommits.appendChild(li);
+            })
+            divRes.appendChild(liCommits)
+           
+            //list of comments
+            const liComments = document.createElement("li");
+            liComments.textContent = "Comments";
+            comments.forEach(c => {
+                const li = document.createElement("li")
+                li.textContent = c.body;
+                liComments.appendChild(li);
+            })
+            divRes.appendChild(liComments)
+
+            //list of reviews
+            const liReviews = document.createElement("li");
+            liReviews.textContent = "Reviews";
+            reviews.forEach(c => {
+                const li = document.createElement("li")
+                li.textContent = c.id;
+                liReviews.appendChild(li);
+            })
+            divRes.appendChild(liReviews)
+        }
+    </script>
+</body>
+</html>

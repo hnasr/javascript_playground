@@ -1,6 +1,7 @@
 const app = require ("express")();
 
 app.get("/isprime", (req, res) => {
+    res.setHeader("Access-Control-Allow-Origin","*")
     const jsonResponse = isPrime(parseInt(req.query.number))
     res.send(jsonResponse)
 } )

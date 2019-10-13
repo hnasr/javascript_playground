@@ -63,3 +63,10 @@ app.get("/pool", async (req, res) => {
 })
 
 app.listen(9000, () => console.log("Listening on port 9000"))
+
+/*
+
+for (let i = 0; i < 1000; i++) fetch(`http://localhost:9000/old`).then(a=>a.json()).then(console.log).catch(console.error);
+for (let i = 0; i < 1000; i++) fetch(`http://localhost:9000/pool`).then(a=>a.json()).then(console.log).catch(console.error);
+
+*/

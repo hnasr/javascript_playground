@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Stateful Timer App</title>
+    <style>
+    #divTimer{
+        font-size: 3em;
+    }
+    </style>
+</head>
+<body>
+    <h3>Stateful App</h3>
+    <button id = 'btnStartTimer'>Start Timer</button>
+    <button id = 'btnCancelTimer'>Cancel Timer</button>
+
+    <div id = 'divTimer'>
+        
+    </div>
+    <script>
+    /* 
+    stateful application
+    0 No Timer - Start Button is visible and Cancel is hidden
+    1 Timer Running - Start button is hidden cancel is visible
+    */
+    //initial state is always 0
+    //if the state is 1 then timeEnd should have the time it ends
+    let appState =  {
+        "state": 0, 
+        "timeEnd" : null
+    }  
+
+    const btnStartTimer = document.getElementById("btnStartTimer");
+    const btnCancelTimer = document.getElementById("btnCancelTimer");
+    const divTimer = document.getElementById("divTimer");
+
+    updateState(appState)
+
+    btnStartTimer.addEventListener("click" , e => {
+        const timeEnd = new Date(new Date().getTime() + 30*1000)
+        startTimer(timeEnd)
+    });
+
+
+    btnCancelTimer.addEventListener("click" , e => {
+        cancelTimer()
+    });
+   
+    
+    function startTimer(timeEnd) {
+        appState.state = 1;
+        appState.timeEnd = timeEnd.toString();
+        updateState(appState);
+        updateTimer(timeEnd);
+    }
+
+    function cancelTimer(){
+        appState.state = 0;
+        appState.timeEnd = null;
+        updateState(appState)
+    }
+
+    function updateTimer(){
+        const timeEnd = new Date(appState.timeEnd)
+        const remainSeconds = Math.round((timeEnd - (new Date()).getTime())/1000)
+       
+        divTimer.textContent = remainSeconds
+        //a cancel event might be sent 
+
+        if (remainSeconds <= 0 || appState.state === 0) {
+            appState.state = 0;
+            appState.timeEnd = null;
+            updateState(appState)
+            return;
+        }
+        
+        
+        setTimeout(updateTimer, 1000);
+    }
+
+    function resumeState(state){
+        appState = state;
+        if (appState.state === 1) {
+            startTimer(appState.timeEnd)
+        }
+        else
+            cancelTimer();
+
+    }
+
+    function updateState(appState) {
+        if (appState.state === 0 )
+        {
+            btnStartTimer.style.display = "block"
+            btnCancelTimer.style.display = "none"
+            divTimer.textContent = "";
+        }
+        else
+        {
+            btnStartTimer.style.display = "none"
+            btnCancelTimer.style.display = "block"
+            divTimer.textContent = "";
+        }
+    }
+ 
+
+    </script>
+</body>
+</html>

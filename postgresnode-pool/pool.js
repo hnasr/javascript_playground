@@ -13,13 +13,13 @@ const pool = new Pool({
     "idleTimeoutMillis": 0
 })
 
-app.get("/all", async (req, res) => {
+app.get("/employees", async (req, res) => {
     const fromDate = new Date();
 
     //return all rows
-    const results = await pool.query("select * from employees")
+    const results = await pool.query("select employeeid eid,firstname,ssn from employees")
     console.table(results.rows)
-
+    console.log(new Date())
     const toDate = new Date();
     const elapsed = toDate.getTime() - fromDate.getTime();
 
@@ -27,4 +27,4 @@ app.get("/all", async (req, res) => {
     res.send({"rows": results.rows, "elapsed": elapsed, "method": "pool"})
 })
 
-app.listen(9000, () => console.log("Listening on port 9000"))
+app.listen(2015, () => console.log("Listening on port 2015"))

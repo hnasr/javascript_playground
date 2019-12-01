@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+     "start" : "node pool.js" 
+ },
   "keywords": [],
   "author": "",
   "license": "ISC"

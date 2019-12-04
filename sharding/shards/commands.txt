@@ -7,5 +7,5 @@ docker run --name shard2 -p 5433:5432 pgshard
 docker run --name shard3 -p 5434:5432 pgshard
 
 //spin up pgadmin
-docker run -e PGADMIN_DEFAULT_EMAIL=“hussein” -e PGADMIN_DEFAULT_PASSWORD=“password” -p 5555:80 —name pgadmin dpage/pgadmin4 
+docker run -e PGADMIN_DEFAULT_EMAIL=“hussein” -e PGADMIN_DEFAULT_PASSWORD="password" -p 5555:80 —name pgadmin dpage/pgadmin4 
 

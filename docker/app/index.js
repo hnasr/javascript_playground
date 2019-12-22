@@ -1,6 +1,13 @@
 const app = require("express")();
+const appid = process.env.APPID;
 
 app.get("/", (req,res) => 
-res.send("hello from a lightweight container!!"))
+res.send(`appid: ${appid} home page: says hello!`))
 
-app.listen(9999, ()=>console.log("Listening on 9999"))
+app.get("/app1", (req,res) => 
+res.send(`appid: ${appid} app1 page: says hello!`))
+ 
+app.get("/app2", (req,res) => 
+res.send(`appid: ${appid} app2 page: says hello!`))
+ 
+app.listen(9999, ()=>console.log(`${appid} is listening on 9999`))

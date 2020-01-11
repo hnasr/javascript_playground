@@ -12,6 +12,11 @@ const httpserver = http.createServer((req, res) => {
 const websocket = new WebSocketServer({
     "httpServer": httpserver
 })
+
+
+httpserver.listen(8080, () => console.log("My server is listening on port 8080"))
+
+
 //when a legit websocket request comes listen to it and get the connection .. once you get a connection thats it! 
 websocket.on("request", request=> {
 
@@ -30,8 +35,6 @@ websocket.on("request", request=> {
 
 })
  
-httpserver.listen(8080, () => console.log("My server is listening on port 8080"))
-
 function sendevery5seconds(){
 
     connection.send(`Message ${Math.random()}`);

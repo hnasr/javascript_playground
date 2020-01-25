@@ -3,10 +3,8 @@ const WebSocketServer = require("websocket").server
 let connection = null;
 
 //create a raw http server (this will help us create the TCP which will then pass to the websocket to do the job)
-const httpserver = http.createServer((req, res) => {
-
-    console.log("we have received a request");
-})
+const httpserver = http.createServer((req, res) => 
+                console.log("we have received a request"))
 
  //pass the httpserver object to the WebSocketServer library to do all the job, this class will override the req/res 
 const websocket = new WebSocketServer({
@@ -26,6 +24,7 @@ websocket.on("request", request=> {
     connection.on("message", message => {
 
         console.log(`Received message ${message.utf8Data}`)
+        connection.send(`got your message: ${message.utf8Data}`)
     })
 
 

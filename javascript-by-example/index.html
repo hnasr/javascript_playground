@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Space Invader game</title>
+    <style>
+    canvas {
+        background:black;
+    }
+
+    html,body {
+        margin:0;
+    }
+
+    </style>
+</head>
+<body>
+    <canvas></canvas>
+
+    <script type = 'module'>
+    'use strict'
+    import {SpaceShip} from './classes.mjs'
+    import {Alien} from './classes.mjs'
+    import {AlienFleet} from './classes.mjs'
+    import {Bullet} from './classes.mjs'
+    import {BattleField} from './classes.mjs'
+
+    
+    const canvas = document.querySelector("canvas")
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const context = canvas.getContext("2d")
+    
+    const player1 = new SpaceShip(context)
+    const alienFleet = new AlienFleet(context, 10)
+    const battleField = new BattleField(alienFleet)
+    battleField.addPlayer(player1)
+    battleField.addFleet(alienFleet)
+    battleField.start();
+
+    function animate() {
+        
+        context.clearRect(0,0, canvas.width, canvas.height)
+        //process new inputs we can choose to process inputs every frame or buffer them
+        battleField.processInputs()
+        //calculate new state , collesions, 
+        battleField.hit()
+        //draw results
+        battleField.draw()
+
+        requestAnimationFrame(animate)
+    }
+   
+   
+
+   window.addEventListener("keydown", e => {
+       console.log(e.key)
+       let dir = 1;
+       if (e.key == "ArrowRight")
+           {dir = 1;
+            battleField.addInput( player1, 1) 
+           }
+       if (e.key == "ArrowLeft")
+           {dir = -1;  
+            battleField.addInput( player1, -1) 
+        }
+
+       if (e.key == " ")
+       {
+        battleField.shootBullet(player1)
+        
+       }
+
+
+   })
+ 
+  
+   animate();
+    </script>
+</body>
+</html>

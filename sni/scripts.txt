@@ -1,0 +1,2 @@
+generate domain
+generate certificate with letsencrypt

@@ -6,7 +6,7 @@ async function connect() {
     try {
 
         const con = await mysql.createConnection({
-            "host" : "husseinmac",
+            "host" : "localhost",
             "port": 3306,
             "user": "root",
             "password": "password",
@@ -21,8 +21,9 @@ async function connect() {
 
          //insert
       
-       await con.beginTransaction();
-
+        await con.query("drop table test1,test2,test3,test4"); 
+ 
+        /*
        const insert1  = await con.query("INSERT INTO EMPLOYEES (NAME, SSN) VALUES (?, ?)", 
          ['Lord Valdmore', '888']);
         
@@ -64,7 +65,7 @@ async function connect() {
 
         const resultsAll = await con.query(
             `SELECT * FROM EMPLOYEES `);
-
+            */
         console.table(resultsAll[0]);
       //  await con.commit();
     }

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script type = 'module'> 
+
+        import { GitHub } from "./github.mjs";
+
+                
+        async function run (){
+
+        try {
+            const github = new GitHub();
+            const res = await github.emojis();
+            const j = await res.json();
+            Object.keys(j).forEach(k => {
+
+                const img = document.createElement("img");
+                img.src = j[k];
+                document.body.appendChild(img);
+            })
+        }
+        catch(e)
+        {
+            console.error(e)
+        }
+
+     }
+
+
+     run();
+
+
+    </script>
+
+</body>
+</html>

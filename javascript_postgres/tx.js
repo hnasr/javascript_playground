@@ -11,6 +11,33 @@ const client = new Client( {
 
 execute()
 
+ 
+async function execute_tx() {
+    try{
+    
+    await client.connect()
+    console.log("Connected successfully.")
+    //await client.query("insert into employees values (1, 'John')")
+    await client.query("BEGIN");
+    const {rows} = await client.query("select * from employees")
+    console.table(rows)
+    await client.query("COMMIT");
+    }
+    catch (ex)
+    {
+        console.log(`Something wrong happend ${ex}`)
+    }
+    finally 
+    {
+        await client.query("ROLLBACK");
+        await client.end()
+        console.log("Client disconnected successfully.")    
+    }
+    
+}
+
+
+
 async function execute() {
 try {
     const cursor = new Cursor("select * from employees")

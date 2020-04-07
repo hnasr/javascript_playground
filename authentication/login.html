@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    <h1>Authentication Tutorial</h1>
+    Username<input type = 'text' id = 'txtUsername'>
+    Password <input type = 'password' id = 'txtPassword'>
+    <button id = 'btnLogin'>Login</button>
+    <button id = 'btnRegister'>Register</button>
+
+    <script>
+        const btnLogin = document.getElementById("btnLogin");
+        const btnRegister = document.getElementById("btnRegister");
+        const txtUsername = document.getElementById("txtUsername");
+        const txtPassword = document.getElementById("txtPassword");
+        
+        btnLogin.addEventListener("click", async () => {
+            const result = await fetch("/login", {"method": "POST", "headers": {"content-type": "application/json"}, "body": JSON.stringify({"user": txtUsername.value, "password": txtPassword.value})})
+            const jResult = await result.json();
+            alert(JSON.stringify(jResult))
+        })
+
+        btnRegister.addEventListener("click", async () => {
+            const result = await fetch("/register", {"method": "POST", "headers": {"content-type": "application/json"}, "body": JSON.stringify({"user": txtUsername.value, "password": txtPassword.value})})
+            const jResult = await result.json();
+            alert(JSON.stringify(jResult))
+        })
+    </script>
+</body>
+</html>

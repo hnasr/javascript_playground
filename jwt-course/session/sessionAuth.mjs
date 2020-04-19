@@ -38,10 +38,10 @@ app.get("/", async( req, res) => {
         //session no longer there, expired etc.. 
         //send back login page
         if (user === null) 
-            res.sendFile(__dirname + "/session/login.html");
+            res.sendFile(__dirname + "/login.html");
         else{
             //cook the user page
-            let userHtml = fs.readFileSync(__dirname + "/session/user.html","utf8")
+            let userHtml = fs.readFileSync(__dirname + "/user.html","utf8")
 
             userHtml = userHtml.replace("%USER%", user.username);
             userHtml = userHtml.replace("%ROLE%", user.role);
@@ -51,7 +51,7 @@ app.get("/", async( req, res) => {
         }
     }
     else //else ask the user to login
-        res.sendFile(__dirname + "/session/login.html");
+        res.sendFile(__dirname + "/login.html");
 })
 
 //login post request

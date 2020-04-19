@@ -11,7 +11,7 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}/session/sessionAuth.mjs"
+            "program": "${workspaceFolder}/jwt-final/jwtAuth.mjs"
         }
     ]
 }

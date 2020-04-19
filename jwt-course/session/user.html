@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User page</title>
+    <style>
+       body {
+        background-color: %COLOR%;
+    }
+    </style>
+</head>
+<body>
+    <h1>Hello %USER% ! what is up! You are %ROLE%</h1>
+    You can see this because you are logged in
+
+    <button id = 'btnLogout'>Logout</button>
+    <script>
+
+        const btnLogout = document.getElementById("btnLogout")
+        
+        btnLogout.addEventListener("click", async e => {
+            const result = await fetch("/logout", {"method": "POST"})
+            const jResult = await result.json();
+            alert(JSON.stringify(jResult))
+        }) 
+
+        btnLogout.addEventListener("click", async e => {
+            const result = await fetch("/logout", {"method": "POST"});
+            const jResult = await result.json();
+            alert(JSON.stringify(jResult))
+        })
+
+         
+    </script>
+</body>
+</html>

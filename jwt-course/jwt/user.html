@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User page</title>
+    <style>
+       body {
+        background-color: %COLOR%;
+    }
+    </style>
+</head>
+<body>
+    <h1>Hello %USER% ! what is up! You are %ROLE%</h1>
+    You can see this because you are logged in
+
+    <button id = 'btnLogout'>Logout</button>
+    <script>
+
+        const btnLogout = document.getElementById("btnLogout")
+        
+
+        btnLogout.addEventListener("click", async e => {
+            const result = await fetch("/logout", {"method": "POST", headers: {"content-type": "application/json"}, body: JSON.stringify({"refreshToken": localStorage.getItem("refreshToken")})})
+            const jResult = await result.json();
+            alert(JSON.stringify(jResult))
+        })
+
+        
+        refreshToken();
+        function refreshToken(){
+            //every 30 seconds refresh access token
+            fetch("/token", {"method": "POST", "headers": {"content-type": "application/json"}, "body": JSON.stringify({"refreshToken": localStorage.getItem("refreshToken")}) }).then(a=>a.json()).then(console.log)
+            setTimeout(refreshToken, 30000)
+        } 
+    </script>
+</body>
+</html>

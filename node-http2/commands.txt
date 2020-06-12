@@ -1,0 +1,5 @@
+//self sign cert
+openssl req -x509 -newkey rsa:4096 -nodes -sha256 -subj '/CN=localhost' -keyout localhost-private.pem -out localhost-cert.pem
+
+//cert bot
+sudo certbot certonly --standalone

@@ -1,0 +1,2 @@
+//generate selfsign cert
+openssl req -x509 -newkey rsa:4096 -nodes -sha256 -subj '/CN=localhost' -keyout private.pem -out cert.pem

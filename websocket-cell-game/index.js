@@ -70,7 +70,6 @@ wsServer.on("request", request => {
         }
         //a user plays
         if (result.method === "play") {
-            const clientId = result.clientId;
             const gameId = result.gameId;
             const ballId = result.ballId;
             const color = result.color;

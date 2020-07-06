@@ -1,9 +1,11 @@
-const {Client} = require("pg")
+const {Pool} = require("pg")
+//using pool is better for web apps so that we can
+//Check out this video I discuss this in details
+//https://www.youtube.com/watch?v=GTeCtIoV2Tw
 const express = require("express")
 const app = express()
 app.use(express.json())
-let client; 
-
+let pool; 
 
 app.delete("/todos", async (req, res) => {
     const {id} = req.body;  
@@ -32,15 +34,13 @@ async function query () {
 async function connect () {
 try {
 
-    client = new Client({
+    pool = new Pool({
         "host" : "husseinmac",
         "user": "postgres",
         "password": "postgres",
         "database": "todo",
         "port" : 5432
     })
-    
-    await client.connect()
    
 }
 catch(e)
@@ -55,7 +55,7 @@ catch(e)
 async function deleteTodo(todoId) {
     try {
 
-        await client.query(`DELETE FROM TODOS where id = $1`, [todoId] )
+        await pool.query(`DELETE FROM TODOS where id = $1`, [todoId] )
         return true
     }
     catch (e){
@@ -66,7 +66,7 @@ async function deleteTodo(todoId) {
 async function create(todoText) {
     try {
 
-        await client.query(`INSERT INTO TODOS (text) VALUES ('${todoText}')`)
+        await pool.query(`INSERT INTO TODOS (text) VALUES ('${todoText}')`)
         return true
     }
     catch (e){

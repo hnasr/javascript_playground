@@ -2,8 +2,8 @@ const http2 = require ("http2")
 const fs = require("fs")
 
 const server = http2.createSecureServer({
-    "key": fs.readFileSync("private.pem"),
-    "cert": fs.readFileSync("cert.pem")
+    "key": fs.readFileSync("localhost-private.pem"),
+    "cert": fs.readFileSync("localhost-cert.pem")
 })
 
 server.on("stream", (stream, headers) => {

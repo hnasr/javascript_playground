@@ -1,0 +1,5 @@
+FROM node:13
+WORKDIR /home/node/test
+COPY . .
+RUN npm install
+CMD npm run test

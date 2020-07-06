@@ -29,7 +29,7 @@ websocket.on("request", request=> {
 
 
     //use connection.send to send stuff to the client 
-    sendevery5seconds();
+   // sendevery5seconds();
     
 
 })

@@ -1,15 +1,16 @@
 {
-  "name": "flavorwheel",
+  "name": "jenkins",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js"
+    "app": "node index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "nodemon": "^1.19.1"
+    "express": "^4.17.1",
+    "pg": "^8.0.0"
   }
 }

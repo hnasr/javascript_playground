@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+    pg:
+        image: postgres:11
+        environment: 
+            - POSTGRES_PASSWORD=postgres
+    ob:
+        image: ob
+        environment:
+            - PGHOST=pg
+            - PORT=8080
+        ports:
+            - "8080:8080"
+        depends_on:
+            - pg
+    test:
+        build:
+            context: ../test
+        environment:
+            - PORT=8080
+        depends_on:
+            - ob

@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+    pg:
+        image: postgres:12
+        environment:
+            - POSTGRES_PASSWORD=postgres
+    ob:
+        #build: ../app
+        image: ob
+        environment:
+            - PGHOST=pg
+            - PORT=8080
+        ports:
+            - "8080:8080"
+        depends_on:
+            - pg
+        restart: on-failure:10
+    test:
+        #build: ../test
+        image: test
+        environment:
+            - OBHOST=ob
+            - OBPORT=8080
+        depends_on:
+            - pg
+            - ob
+        restart: on-failure:10

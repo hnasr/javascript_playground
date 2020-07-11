@@ -10,7 +10,11 @@ try {
    
     const {rows} = await client.query('SELECT * FROM EMPLOYEES')
     console.table(rows)
-    await client.end()
+    //We don't need to close the connection twice
+    //since we are already closing it in finally
+    //We found this in the wireshark video 
+    //while inspecting the FIN packets
+    //await client.end()
 }
 catch(ex){
     console.log("Some error" + ex)

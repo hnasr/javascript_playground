@@ -96,7 +96,7 @@ async function connect() {
 
 async function readTodos() {
     try {
-    const results = await postgres.query("select id, text from todos");
+    const results = await pool.query("select id, text from todos");
     return results.rows;
     }
     catch(e){
@@ -107,7 +107,7 @@ async function readTodos() {
 async function createTodo(todoText){
 
     try {
-        await postgres.query("insert into todos (text) values ($1)", [todoText]);
+        await pool.query("insert into todos (text) values ($1)", [todoText]);
         return true
         }
         catch(e){
@@ -120,7 +120,7 @@ async function createTodo(todoText){
 async function deleteTodo(id){
 
     try {
-        await postgres.query("delete from todos where id = $1", [id]);
+        await pool.query("delete from todos where id = $1", [id]);
         return true
         }
         catch(e){

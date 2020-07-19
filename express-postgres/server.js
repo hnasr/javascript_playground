@@ -87,9 +87,7 @@ async function start() {
 
 async function connect() {
     try {
-        await pool.connect();
-        await pool.connect();
-        await pool.connect();
+        await pool.connect(); 
     }
     catch(e) {
         console.error(`Failed to connect ${e}`)

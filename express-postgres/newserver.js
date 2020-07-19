@@ -11,6 +11,7 @@ const express = require ("express")
 const app = express();
 app.use(express.json())
 
+//dbread role with SELECT 
 const dbReadPool = new Pool({
     "user": "dbread",
     "password" : "dbread",
@@ -19,7 +20,7 @@ const dbReadPool = new Pool({
     "database" : "todo"
 })
 
-
+//dbdelete role with SELECT, DELETE
 const dbDeletePool = new Pool({
     "user": "dbdelete",
     "password" : "dbdelete",
@@ -28,6 +29,7 @@ const dbDeletePool = new Pool({
     "database" : "todo"
 })
 
+//dbcreate role with INSERT
 
 const dbCreatePool = new Pool({
     "user": "dbcreate",

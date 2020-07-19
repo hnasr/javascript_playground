@@ -1,9 +1,16 @@
-const {Client} = require("pg")
+//using pool is better for web apps so that we can 
+//reserve a client connection for each request and 
+//avoid problems with concurrent requests.. 
+//Check out this video I discuss this in details
+//https://www.youtube.com/watch?v=GTeCtIoV2Tw
+//I Changed all the singelton clients in this code to Pool
+
+const {Pool} = require("pg")
 const express = require ("express")
 const app = express();
 app.use(express.json())
 
-const client = new Client({
+const pool = new Pool({
     "user": "postgres",
     "password" : "postgres",
     "host" : "husseinmac",
@@ -82,7 +89,7 @@ async function start() {
 
 async function connect() {
     try {
-        await client.connect();
+        await pool.connect();
     }
     catch(e) {
         console.error(`Failed to connect ${e}`)
@@ -91,7 +98,7 @@ async function connect() {
 
 async function readTodos() {
     try {
-    const results = await client.query("select id, text from todos");
+    const results = await pool.query("select id, text from todos");
     return results.rows;
     }
     catch(e){
@@ -102,7 +109,7 @@ async function readTodos() {
 async function createTodo(todoText){
 
     try {
-        await client.query("insert into todos (text) values ($1)", [todoText]);
+        await pool.query("insert into todos (text) values ($1)", [todoText]);
         return true
         }
         catch(e){
@@ -115,7 +122,7 @@ async function createTodo(todoText){
 async function deleteTodo(id){
 
     try {
-        await client.query("delete from todos where id = $1", [id]);
+        await pool.query("delete from todos where id = $1", [id]);
         return true
         }
         catch(e){

@@ -10,15 +10,32 @@ const express = require ("express")
 const app = express();
 app.use(express.json())
 
-const pool = new Pool({
-    "user": "postgres",
-    "password" : "postgres",
+const dbReadPool = new Pool({
+    "user": "dbread",
+    "password" : "dbread",
     "host" : "husseinmac",
     "port" : 5432,
     "database" : "todo"
 })
 
- 
+
+const dbDeletePool = new Pool({
+    "user": "dbdelete",
+    "password" : "dbdelete",
+    "host" : "husseinmac",
+    "port" : 5432,
+    "database" : "todo"
+})
+
+
+const dbCreatePool = new Pool({
+    "user": "dbcreate",
+    "password" : "dbcreate",
+    "host" : "husseinmac",
+    "port" : 5432,
+    "database" : "todo"
+})
+
 app.get("/", (req, res) => res.sendFile(`${__dirname}/index.html`))
 
 app.get("/todos", async (req, res) => {
@@ -87,9 +104,9 @@ async function start() {
 
 async function connect() {
     try {
-        await pool.connect();
-        await pool.connect();
-        await pool.connect();
+        await dbCreatePool.connect();
+        await dbDeletePool.connect();
+        await dbReadPool.connect();
     }
     catch(e) {
         console.error(`Failed to connect ${e}`)
@@ -98,7 +115,7 @@ async function connect() {
 
 async function readTodos() {
     try {
-    const results = await postgres.query("select id, text from todos");
+    const results = await dbReadPool.query("select id, text from todos");
     return results.rows;
     }
     catch(e){
@@ -109,7 +126,7 @@ async function readTodos() {
 async function createTodo(todoText){
 
     try {
-        await postgres.query("insert into todos (text) values ($1)", [todoText]);
+        await dbCreatePool.query("insert into todos (text) values ($1)", [todoText]);
         return true
         }
         catch(e){
@@ -122,7 +139,7 @@ async function createTodo(todoText){
 async function deleteTodo(id){
 
     try {
-        await postgres.query("delete from todos where id = $1", [id]);
+        await dbDeletePool.query("delete from todos where id = $1", [id]);
         return true
         }
         catch(e){

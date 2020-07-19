@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>MY BEST TODO APP EVER</h1>
+    <h1>MY TODO APP</h1>
     <ol id = 'olTodo'>
 
     </ol>
@@ -18,11 +18,11 @@
     btnCreate.addEventListener("click", async e=> {
                     const jsonRequest = {}
                     jsonRequest.todo = prompt("Enter your todo item!")
-                    const result = await fetch("http://localhost:8080/todos", {method: "POST", 
+                    let result = await fetch("http://localhost:8080/todos", {method: "POST", 
                     headers: {"content-type": "application/json"}, body: JSON.stringify(jsonRequest) })
-                    const success = await result.json();
+                    result = await result.json();
                     readTodos()
-                    alert("CREATED! ")
+                    if (!result.success)  alert("FAILED! ")
 
      })
     readTodos();
@@ -42,11 +42,12 @@
                 li.addEventListener("click", async e => {
                     const jsonRequest = {}
                     jsonRequest.id = e.target.id;
-                    const result = await fetch("http://localhost:8080/todos", {method: "DELETE", 
+                    let result = await fetch("http://localhost:8080/todos", {method: "DELETE", 
                     headers: {"content-type": "application/json"}, body: JSON.stringify(jsonRequest) })
-                    const success = await result.json();
+                    result  = await result.json();
                     readTodos();
-                    alert("Deleted! ")
+                    if (!result.success)  alert("FAILED! ")
+    
                 })
                 olTodo.appendChild(li)
             })

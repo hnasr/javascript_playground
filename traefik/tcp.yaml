@@ -1,0 +1,14 @@
+tcp:
+    routers:
+        allbackendrouter:
+            rule: "HostSNI(`*`)"
+            service: allbackend
+   
+    services:
+        allbackend:
+            loadBalancer:
+                servers:
+                    - address: "husseinmac:1111"
+                    - address: "husseinmac:2222"
+                    - address: "husseinmac:3333"
+                    - address: "husseinmac:4444"

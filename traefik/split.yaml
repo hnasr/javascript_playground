@@ -1,0 +1,29 @@
+http:
+    routers:
+        allbackendrouter:
+            rule: "Host(`husseinmac`) && Path(`/`)"
+            service: allbackend
+        app1router:
+            rule: "Host(`husseinmac`) && Path(`/app1`)"
+            service: app1backend
+        app2router:
+            rule: "Host(`husseinmac`) && Path(`/app2`)"
+            service: app2backend
+    services:
+        app1backend:
+            loadBalancer:
+                servers:
+                    - url: "http://husseinmac:1111/"
+                    - url: "http://husseinmac:2222/"
+        app2backend:
+            loadBalancer:
+                servers:
+                    - url: "http://husseinmac:3333/"
+                    - url: "http://husseinmac:4444/"
+        allbackend:
+            loadBalancer:
+                servers:
+                    - url: "http://husseinmac:1111/"
+                    - url: "http://husseinmac:2222/"
+                    - url: "http://husseinmac:3333/"
+                    - url: "http://husseinmac:4444/"

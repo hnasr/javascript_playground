@@ -1,0 +1,13 @@
+http:
+    routers:
+        allbackendrouter:
+            rule: "Host(`husseinmac`)"
+            service: allbackend
+    services:
+        allbackend:
+            loadBalancer:
+                servers:
+                    - url: "http://husseinmac:1111/"
+                    - url: "http://husseinmac:2222/"
+                    - url: "http://husseinmac:3333/"
+                    - url: "http://husseinmac:4444/"

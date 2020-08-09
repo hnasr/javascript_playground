@@ -1,0 +1,21 @@
+# Static configuration
+entryPoints:
+    unsecure:
+        address: :80
+    secure:
+        address: :443
+
+certificatesResolvers:
+    myresolver:
+        acme:
+            email: h@husseinnasser.com
+            storage: acme.json
+            httpChallenge:
+                entryPoint: unsecure
+            
+#traefikdemo.ddns.net
+providers:
+   # Enable the file provider to define routers / middlewares / services in file
+   file:
+      filename: tls.yaml
+      watch: true

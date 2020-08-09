@@ -1,0 +1,22 @@
+http:
+    routers:
+        allbackendrouter:
+            rule: "Host(`husseinmac`)"
+            service: wrr
+        
+    services:
+        wrr:
+            weighted:
+                services:
+                    - name: backend1
+                      weight: 4
+                    - name: backend2
+                      weight: 1
+        backend1:
+            loadBalancer:
+                servers:
+                    - url: "http://husseinmac:1111/"
+        backend2:
+            loadBalancer:
+                servers:
+                    - url: "http://husseinmac:2222/"

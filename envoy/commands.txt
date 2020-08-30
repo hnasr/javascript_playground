@@ -1,0 +1,7 @@
+envoytesting.ddns.net
+
+sudo certbot certonly --standalone
+sudo chmod 755 private.pem
+
+
+ envoy --config-path tls2.yaml --concurrency 1

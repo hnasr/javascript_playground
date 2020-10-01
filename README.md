@@ -1,4 +1,4 @@
-# javascript_playground
+# PLAYGROUND --- javascript
 Javascript playground tutorials
 
 This is one of my biggest repros that have all the examples and codes I discuss on my YouTube Channel check it out! 

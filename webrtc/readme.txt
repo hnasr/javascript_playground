@@ -7,3 +7,9 @@ Paste peerB.js content in second browser dev tools
 Go back to First browser (peer A) and paste the content of peerA_Final.js
 use dc.send() to send data from peerA 
 use rc.dc.send() to send data from peerB
+
+
+Watch video here 
+https://www.youtube.com/watch?v=FExZvpVvYxA
+minute 46:00
+

@@ -1,0 +1,9 @@
+Open two browsers
+Open DevTools on both
+Paste peerA.js content in first browser dev tools
+Copy the SDP offer generated JSON
+Got to the second browser and create "offer" object and set it to the SDP you copied (signled) 
+Paste peerB.js content in second browser dev tools
+Go back to First browser (peer A) and paste the content of peerA_Final.js
+use dc.send() to send data from peerA 
+use rc.dc.send() to send data from peerB

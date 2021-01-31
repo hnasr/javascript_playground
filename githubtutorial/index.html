@@ -56,9 +56,9 @@
     async function createIssues() {
         clear();
         const url = "https://api.github.com/repos/husseintest/sandboxpublic/issues"
-        
+        const token = "YOUR_TOKEN_HERE";
         const headers = {
-            "Authorization" : `Token aee50410e8dd47641f20c2119b9ea7f01167dbd6`
+            "Authorization" : `Token ${token}`
         }
 
         const payLoad = {
@@ -104,8 +104,8 @@
  
     async function getIssuesPrivate() {
         clear();
-        const username = "husseintest"
-        const password = "hpf;hkh123"
+        const username = "YOUR_USER_NAME"
+        const password = "YOUR_PASSWORD"
 
         const headers = {
             "Authorization" : `Basic ${btoa(`${username}:${password}`)}`

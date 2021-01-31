@@ -1,13 +1,15 @@
 const express = require("express");
 const app = express();
-app.use(express.json());
+app.use(express.text());
 
-app.get("/", (_,res)=> res.send("test"));
+app.get("/", (_,res)=> res.sendFile(__dirname + "/index.html"));
 app.post("/", (req, res) => {
-
-    const products = req.body;
-    console.log(`Got ${products.length} products from client`)
-    res.send({"result": `Got ${products.length} products from client`})
+    
+    console.log(req.query)
+    res.sendStatus(204)
+    //const products = req.body;
+    //console.log(`Got ${products.length} products from client`)
+    //res.send({"result": `Got ${products.length} products from client`})
 })
 
 app.listen(8080);

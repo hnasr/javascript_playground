@@ -1,5 +1,7 @@
 const {Pool} = require("pg")
-//using pool is better for web apps so that we can
+//using pool is better for web apps so that we can 
+//reserve a client connection for each request and 
+//avoid problems with concurrent requests.. 
 //Check out this video I discuss this in details
 //https://www.youtube.com/watch?v=GTeCtIoV2Tw
 const express = require("express")
@@ -23,17 +25,21 @@ app.post("/todos", async (req, res) => {
 })
 app.get("/todos", async (req,res) => {
     res.setHeader("content-type", "application/json")
-    const rows = await query()
-    res.send(JSON.stringify(rows))
+    const result = await client.query("select id, text from todos")
+    res.send(JSON.stringify({result}))
 })
 app.listen(8080, () => console.log("listening "))
-async function query () {
-    const res = await client.query("select id, text from todos")
-    return res.rows; 
-}
+ 
 async function connect () {
 try {
-
+    /*Working with env variables instead of hardcoding
+    run node like this
+    DBHOST=husseinmac DB=todo node server.js
+    this will set the env variables and you can read them
+    const host = process.env.DBHOST;
+    const db = process.env.DB;
+    */
+   
     pool = new Pool({
         "host" : "husseinmac",
         "user": "postgres",
@@ -74,4 +80,3 @@ async function create(todoText) {
     }
 }
 connect();
-query();

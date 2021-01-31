@@ -109,11 +109,8 @@
 
         const headers = {
             "Authorization" : `Basic ${btoa(`${username}:${password}`)}`
-        } 
-        /*
-        const headers = {
-            "Authorization" : `Token 65b23f5f138ed45a7aab21d66d26aa6a90f7d66a`
-        }*/
+        }  
+        
         const url = "https://api.github.com/search/issues?q=repo:husseintest/sandboxprivate type:issue"
         const response = await fetch(url, {
             "method": "GET",

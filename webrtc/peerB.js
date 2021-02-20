@@ -9,7 +9,7 @@ console.log(" NEW ice candidnat!! on localconnection reprinting SDP " )
  
 remoteConnection.ondatachannel= e => {
 
-      const receiveChannel = event.channel;
+      const receiveChannel = e.channel;
       receiveChannel.onmessage =e =>  console.log("messsage received!!!"  + e.data )
       receiveChannel.onopen = e => console.log("open!!!!");
       receiveChannel.onclose =e => console.log("closed!!!!!!");

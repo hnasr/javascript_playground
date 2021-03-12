@@ -1,0 +1,1 @@
+iptables --table nat --append PREROUTING --protocol tcp --dport 80 --jump REDIRECT --to 8080

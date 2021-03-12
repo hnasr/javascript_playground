@@ -1,0 +1,19 @@
+A ---> B ---> C
+
+A
+//A:55 -> B:81
+B
+//A:55 -> B:81
+//A:55 -> C:8080
+//B:81 -> C:8080
+
+
+//8080->8080
+sudo iptables --in-interface wlan0 --append PREROUTING --table nat --protocol tcp --destination 192.168.254.47 --dport 81 --jump DNAT --to-destination 192.168.254.10:8080 
+
+
+sudo iptables --append POSTROUTING --table nat --protocol tcp --destination 192.168.254.10 --dport 8080 --jump SNAT --to-source 192.168.254.47
+
+
+
+sudo iptables -t nat -A POSTROUTING -p tcp --dport 81 -j MASQUERADE

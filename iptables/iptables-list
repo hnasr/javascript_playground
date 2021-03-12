@@ -1,0 +1,5 @@
+//list nat table
+iptables --table nat --list
+
+//clear nat table
+iptables --table nat --flush

@@ -1,0 +1,14 @@
+
+sudo iptables --table nat --append PREROUTING --destination 192.168.254.47 --protocol tcp --dport 80 --match statistic --mode nth --every 3 --packet 0 --jump DNAT --to-destination 192.168.254.10:1111
+
+sudo iptables --table nat --append PREROUTING --destination 192.168.254.47 --protocol tcp --dport 80 --match statistic --mode nth --every 2 --packet 0 --jump DNAT --to-destination 192.168.254.10:2222
+
+sudo iptables --table nat --append PREROUTING --destination 192.168.254.47 --protocol tcp --dport 80  --jump DNAT --to-destination 192.168.254.10:3333
+
+
+//SNAT
+sudo iptables --table nat --append POSTROUTING --destination 192.168.254.10 --protocol tcp --dport 3333 --jump SNAT --to-source 192.168.254.47
+
+sudo iptables --table nat --append POSTROUTING --destination 192.168.254.10 --protocol tcp --dport 2222 --jump SNAT --to-source 192.168.254.47
+
+sudo iptables --table nat --append POSTROUTING --destination 192.168.254.10 --protocol tcp --dport 1111 --jump SNAT --to-source 192.168.254.47

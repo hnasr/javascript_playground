@@ -1,0 +1,13 @@
+ptables-random-loadbalancer
+
+
+sudo iptables --table nat --delete PREROUTING 1
+
+
+sudo iptables --table nat --append PREROUTING --destination 192.168.254.47 --protocol tcp --dport 80 --match statistic --mode random —probability 0.33 --jump DNAT --to-destination 192.168.254.10:1111
+
+sudo iptables --table nat --append PREROUTING --destination 192.168.254.47 --protocol tcp --dport 80 --match statistic --mode random —probability 0.5 --jump DNAT --to-destination 192.168.254.10:2222
+
+sudo iptables --table nat --append PREROUTING --destination 192.168.254.47 --protocol tcp --dport 80  --jump DNAT --to-destination 192.168.254.10:3333
+
+

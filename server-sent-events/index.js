@@ -15,15 +15,17 @@ app.get("/stream", (req,res) => {
     send(res);
 
 })
+const port = process.env.PORT || 8888;
+const serverName = process.env.SERVER_NAME || "sample";
 
 let i = 0;
 function send (res) {
     
-    res.write("data: " + `hello!${i++}\n\n`);
+    res.write("data: " + `hello from ${serverName} ---- [${i++}]\n\n`);
 
 
     setTimeout(() => send(res), 1000);
 }
 
-app.listen(8888)
-console.log("Listening on 8888")
+app.listen(port)
+console.log(`Listening on ${port}`)

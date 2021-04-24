@@ -51,20 +51,22 @@
            else
              tr2.appendChild(hd)
         }
-        
-    
 
-    
-    let startTime= null; 
+    let startTime= null;
     function readCountActual() {
         startTime = Date.now();
         lblDuration.textContent = "Counting...."
         gradeCalls = []
-        //fetch and populate 
-        grades.forEach (g => gradeCalls.push(fetch(`http://localhost:8080/grades?from=${g.from}&to=${g.to}`)));
-       // Promise.all(gradeCalls).then(a => a.forEach (g => g.then(a=>a.json()).then(a=> document.getElementById(a.id).textContent = a.id + ` (${nFormatter(a.rowCount,2)})`)));
-        Promise.all(gradeCalls).then(a => { lblDuration.textContent= Date.now() - startTime + "ms";  a.forEach(b=>   b.json().then(c => document.getElementById(c.id).textContent = c.id + ` (${nFormatter(c.rowCount,2)})`) )});
 
+        Promise.all(grades.map(grade => fetchAndUpdateGrades(grade, 'grades'))).then(() => lblDuration.textContent= Date.now() - startTime + "ms")
+    }
+
+    async function fetchAndUpdateGrades(grade, endpoint) {
+        const result = await fetch(`http://localhost:8080/${endpoint}?from=${grade.from}&to=${grade.to}`);
+
+        result.json().then(result => {
+            document.getElementById(grade.id).textContent = result.id + ` (${nFormatter(result.rowCount,2)})`;
+        });
     }
 
 
@@ -72,11 +74,8 @@
         startTime = Date.now();
         lblDuration.textContent = "Counting...."
         gradeCalls = []
-        //fetch and populate 
-        grades.forEach (g => gradeCalls.push(fetch(`http://localhost:8080/grades/estimate?from=${g.from}&to=${g.to}`)));
-       // Promise.all(gradeCalls).then(a => a.forEach (g => g.then(a=>a.json()).then(a=> document.getElementById(a.id).textContent = a.id + ` (${nFormatter(a.rowCount,2)})`)));
-        Promise.all(gradeCalls).then(a => { lblDuration.textContent= Date.now() - startTime + "ms";  a.forEach(b=>   b.json().then(c => document.getElementById(c.id).textContent = c.id + ` (${nFormatter(c.rowCount,2)})`) )});
 
+        Promise.all(grades.map(grade => fetchAndUpdateGrades(grade, 'grades/estimate'))).then(() => lblDuration.textContent= Date.now() - startTime + "ms")
     }
      
 

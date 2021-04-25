@@ -1,0 +1,16 @@
+version: '3'
+services:
+  zookeeper:
+    image: zookeeper
+    hostname: zookeeper
+    ports:
+      - 2181:2181
+
+  kafka:
+    image: ches/kafka
+    hostname: localhost
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: <YOUR_IP_ADDRESS>
+      ZOOKEEPER_IP: <YOUR_IP_ADDRESS>

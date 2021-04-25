@@ -53,29 +53,31 @@
         }
 
     let startTime= null;
+
+    async function fetchAndUpdateGrades(grade, endpoint) {
+        const result = await fetch(`http://localhost:8080/${endpoint}?from=${grade.from}&to=${grade.to}`);
+
+        const resultJSON = await result.json();
+
+        document.getElementById(grade.id).textContent = resultJSON.id + ` (${nFormatter(resultJSON.rowCount,2)})`;
+        
+        return resultJSON.rowCount; 
+      }
+
+
     function readCountActual() {
         startTime = Date.now();
         lblDuration.textContent = "Counting...."
         gradeCalls = []
 
-        Promise.all(grades.map(grade => fetchAndUpdateGrades(grade, 'grades'))).then(() => lblDuration.textContent= Date.now() - startTime + "ms")
-    }
-
-    async function fetchAndUpdateGrades(grade, endpoint) {
-        const result = await fetch(`http://localhost:8080/${endpoint}?from=${grade.from}&to=${grade.to}`);
-
-        result.json().then(result => {
-            document.getElementById(grade.id).textContent = result.id + ` (${nFormatter(result.rowCount,2)})`;
-        });
-    }
-
-
+        Promise.all(grades.map(grade => fetchAndUpdateGrades(grade, 'grades'))).then(allRowCounts => lblDuration.textContent= "Took " + (Date.now() - startTime) + "ms" + ` for ${nFormatter(allRowCounts.reduce((a, c) => a + c),2)} grades`)
+   }
     function readCountEstimate(){
         startTime = Date.now();
         lblDuration.textContent = "Counting...."
         gradeCalls = []
 
-        Promise.all(grades.map(grade => fetchAndUpdateGrades(grade, 'grades/estimate'))).then(() => lblDuration.textContent= Date.now() - startTime + "ms")
+        Promise.all(grades.map(grade => fetchAndUpdateGrades(grade, 'grades/estimate'))).then(allRowCounts => lblDuration.textContent= "Took " + (Date.now() - startTime) + "ms" + ` for ${nFormatter(allRowCounts.reduce((a, c) => a + c),2)} grades`)
     }
      
 

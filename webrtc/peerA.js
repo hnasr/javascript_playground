@@ -12,7 +12,7 @@ iceConfiguration.iceServers.push({
             })
 //stun  server
 iceConfiguration.iceServers.push({
-                urls: 'turn:stun1.l.google.com:19302' 
+                urls: 'stun:stun1.l.google.com:19302' 
             })    
 
 const localConnection = new RTCPeerConnection(iceConfiguration)

@@ -4,7 +4,7 @@ const httpserver = http.createServer();
 let connCount = 0;
 function getCount() {
     httpserver.getConnections( (err_, connectionCount)=> {
-         countCount = connectionCount;
+         connCount = connectionCount;
          console.log(`Number of connections = ${connectionCount}`)
     
     })
@@ -16,7 +16,7 @@ getCount();
 
 function streamit(res){
     
-    res.write("stream : " + Date.now() + "Con#=" + countCount + "\n");
+    res.write("stream : " + Date.now() + "Con#=" + connCount + "\n");
     setTimeout(()=>streamit(res), 1000);
 }
 

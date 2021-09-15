@@ -1,4 +1,4 @@
-const http = require ("http");
+const http = require("http")
 const httpserver = http.createServer();
 
 let connCount = 0;
@@ -39,4 +39,7 @@ httpserver.on("connection", connection=> {
      console.log("Someone just connected!")
 })
 
-httpserver.listen(8080, ()=>console.log("Listening on port 8080"));
+httpserver.on("listening", ()=>console.log(`Listening on http://localhost:${httpserver.address().port}) ${httpserver.address().address} ${httpserver.address().family}`));
+httpserver.on("error", (err) => console.error("Detected error" + err))
+httpserver.listen();
+

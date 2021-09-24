@@ -1,0 +1,10 @@
+#kill all node processes
+sudo killall node
+#stop nginx
+nginx -s stop
+#kill any dead nginx processes
+sudo killall nginx 
+#run node 
+node index.js 2222 & node index.js 3333 & node index.js 4444 & node index.js 5555  
+#run nginx with a config
+nginx -c /Users/HusseinNasser/javascript/javascript_playground/nginx-websockets/tcp.cfg 

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>file reader</title>
+</head>
+<body>
+    
+   <input type = 'file' id = 'f'> 
+   <button id = 'btnRead'>Read & Upload</button>
+   <div id = 'txtProgress'></div>
+    <script>
+        const btnRead = document.getElementById("btnRead");
+        const divP = document.getElementById("txtProgress")
+        btnRead.addEventListener("click", e => {
+            const f = document.getElementById("f");
+            const reader = new FileReader();
+            reader.onload= async ev => {
+                
+                console.log(`started ${ev}`)
+                console.log(ev.target.result)
+                const uploadId =   Math.random()*1000 + f.files[0].name 
+                for (let i = 0; i < ev.target.result.byteLength/ 1000 + 1; i++)
+                {
+                    const chunk =ev.target.result.slice(i*1000,i*1000 + 1000) 
+                    console.log(`sending ${chunk.byteLength}`)
+                    await fetch("http://localhost:8080/upload",  {
+                        "method": "POST",
+                        "headers": {
+                            "content-type": "application/octet-stream", 
+                            "content-length" : chunk.byteLength,
+                            "upload-id": uploadId
+                        },
+                        "body": chunk
+                });
+
+                divP.textContent = Math.round(i*1000*100/ev.target.result.byteLength,0) + "%";
+
+                }
+               
+            }
+ 
+            reader.readAsArrayBuffer(f.files[0]);
+            
+
+        })
+
+    </script>
+</body>
+</html>

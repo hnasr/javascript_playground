@@ -1,4 +1,6 @@
 const http = require("http");
+let PORT = process.argv[2] | 8080
+console.log(`port is ${PORT} `)
 
 //create a raw http server (this will help us create the TCP which will then pass to the websocket to do the job)
 const httpserver = http.createServer()

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Hello, WebSockets</h1>
+    <input type = 'text' id = 'txt'>
+    <div id = 'divOut'></div>
+    <script>
+    const txtBox = document.getElementById("txt");
+    const divOut = document.getElementById("divOut");
+    const ws = new WebSocket("ws://localhost/wsapp/")
+    ws.onmessage = e=> divOut.innerHTML += e.data + "<br/>";
+    txtBox.addEventListener("keypress", e=> {
+        if (e.keyCode === 13){
+
+          ws.send(txtBox.value);
+        txtBox.value ="";
+        }
+    })
+    </script>
+
+</body>
+</html>

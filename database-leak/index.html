@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <select id = 'lstTodos' multiple><option>please wait....</option></select>
+    <script>
+        const lstTodos = document.getElementById("lstTodos");
+        read();
+        async function read()  {
+            const result = await fetch("/todos");
+            
+            while(lstTodos.firstChild) lstTodos.remove(lstTodos.firstChild)
+            const todos = await result.json();
+            todos.result.rows.forEach(t=> {
+                const o = document.createElement("option")
+                o.textContent = t.todo; 
+                o.id = t.id
+                lstTodos.appendChild(o)
+            })
+        }
+        
+
+    </script>
+</body>
+</html>

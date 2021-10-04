@@ -10,7 +10,7 @@ app.get("/todos", async (req,res) => {
     client.query("begin")
     const result = await pool.query("select id, todo from todos")
     client.query("commit");
-    //client.release();
+    //client.release(); 
     res.send(JSON.stringify({result}))
 })
 

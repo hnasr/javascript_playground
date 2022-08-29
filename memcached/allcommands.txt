@@ -1,0 +1,14 @@
+//run docker login (create an account hub.docker.com)
+//to spin up a memcached container (remove -d to see if you get any errors)
+docker run --name mem1 -p 11211:11211 -d memcached 
+docker run --name mem2 -p 11212:11211 -d memcached 
+docker run --name mem3 -p 11213:11211 -d memcached 
+docker run --name mem4 -p 11214:11211 -d memcached 
+
+//memcached commands
+//command keyname flags expiry datalength
+set foo 0 3600 2
+get foo
+stats
+stats slabs
+

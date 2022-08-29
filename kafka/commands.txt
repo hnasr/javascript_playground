@@ -1,0 +1,10 @@
+
+//if you ever mess up or you want to start fresh just stop and remove the containers and rerun the command 
+//stop and remove all containers
+docker stop zookeeper kafka
+docker rm zookeeper kafka
+//run zookeeper
+docker run --name zookeeper  -p 2181:2181 -d zookeeper
+
+//run kafka (replace husseinmac with your hostname where docker is running) 
+docker run -p 9092:9092 --name kafka  -e KAFKA_ZOOKEEPER_CONNECT=husseinmac:2181 -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://husseinmac:9092 -e KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1 -d confluentinc/cp-kafka 

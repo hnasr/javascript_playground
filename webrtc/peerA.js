@@ -24,7 +24,7 @@ const localConnection = new RTCPeerConnection()
  
 
 localConnection.onicecandidate = e =>  {
-console.log(" NEW ice candidnat!! on localconnection reprinting SDP " )
+console.log(" NEW ice candidate!! on localconnection reprinting SDP " )
  console.log(JSON.stringify(localConnection.localDescription))
 }
 

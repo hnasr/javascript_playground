@@ -1,0 +1,23 @@
+{
+  "name": "javascript_playground",
+  "version": "1.0.0",
+  "description": "Javascript playground tutorials",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hnasr/javascript_playground.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hnasr/javascript_playground/issues"
+  },
+  "homepage": "https://github.com/hnasr/javascript_playground#readme"
+}

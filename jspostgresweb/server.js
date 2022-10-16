@@ -25,7 +25,7 @@ app.post("/todos", async (req, res) => {
 })
 app.get("/todos", async (req,res) => {
     res.setHeader("content-type", "application/json")
-    const result = await client.query("select id, text from todos")
+    const result = await pool.query("select id, text from todos")
     res.send(JSON.stringify({result}))
 })
 app.listen(8080, () => console.log("listening "))

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+</head>
+<body>
+    <div id ='divTodos'></div>
+    <script>
+        const divTodos = document.getElementById ("divTodos");
+        async function readTodos() {
+            const result = await fetch("/todos");
+            const todos = await result.json();
+            todos.forEach(t => {
+                const chk = document.createElement("input");
+                chk.textContent = t.todo;
+                chk.id = t.id;
+                divTodos.appendChild(chk);
+            })
+        }
+
+        async function deleteTodos(ids) {
+            
+        }
+        readTodos();
+    </script>
+</body>
+</html>

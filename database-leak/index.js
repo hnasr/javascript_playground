@@ -5,12 +5,17 @@ app.use(express.json())
 
 app.get("/todos", async (req,res) => {
     res.setHeader("content-type", "application/json")
+    
     //pull a connection from pool
     const client = await pool.connect();
     client.query("begin")
-    const result = await pool.query("select id, todo from todos")
+    //this was incorrectly set as pool.query in the video should be client.query 
+    //https://youtu.be/KGbwkbaCwss
+    //const result = await pool.query("select id, todo from todos") 
+    const result = await client.query("select id, todo from todos")
     client.query("commit");
     //client.release(); 
+    //proper way to release is to have a finally block capture failures
     res.send(JSON.stringify({result}))
 })
 

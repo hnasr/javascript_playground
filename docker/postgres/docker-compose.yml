@@ -1,0 +1,12 @@
+version : "3"
+
+services:
+ pg:
+  image: postgres
+ pgadmin:
+  image: dpage/pgadmin4
+  ports:
+   - "5555:80"
+  environment:
+   - PGADMIN_DEFAULT_EMAIL="hussein"
+   - PGADMIN_DEFAULT_PASSWORD="password"

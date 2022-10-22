@@ -1,0 +1,2 @@
+from alpine
+run apk add openjdk8

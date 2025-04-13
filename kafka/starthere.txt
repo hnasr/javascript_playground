@@ -1,0 +1,23 @@
+This sample spins up two containers, one for docker broker and one for zookeeper, both exposing their ports to the docker host. We then write Node producer, consumer and topics to hit the broker with. 
+
+Once you clone this repo, make sure you have docker and nodejs installed on your host and take note of your docker host IP address.
+
+Edit docker-compose.yml, change the ip address of my host 192.168.7.179 with your ip. 
+
+Do the same with producer.js, consumer.js and topics.js
+
+You are now ready. 
+
+1) Spin the containers, change directory to the kafka directory
+docker-compose up 
+
+2) start another terminal (note you could do this from another machine) Create the topics
+node topics.js
+3) Produce some content 
+node produce.js user1
+node produce.js user2
+4) run consumer
+node consumer.js 
+5) go back and produce some more content and notice how the consumer will poll for them 
+node producer.js user3 
+

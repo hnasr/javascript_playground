@@ -4,13 +4,10 @@ services:
     hostname: zookeeper
     ports:
       - 2181:2181
-    volumes:
-      - zookeeper_data:/data
-      - zookeeper_datalog:/datalog
 
   kafka:
-    image: ches/kafka
     restart: always
+    image: ches/kafka
     hostname: localhost
     ports:
       - "9092:9092"
@@ -19,12 +16,6 @@ services:
       ZOOKEEPER_IP: 192.168.7.179
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       ALLOW_PLAINTEXT_LISTENER: 1
+    
     depends_on:
       - zookeeper
-    volumes:
-      - kafka_data:/kafka
-
-volumes:
-  zookeeper_data:
-  zookeeper_datalog:
-  kafka_data:

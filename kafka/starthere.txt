@@ -12,6 +12,7 @@ You are now ready.
 docker-compose up 
 
 2) start another terminal (note you could do this from another machine) Create the topics
+node install
 node topics.js
 3) Produce some content 
 node produce.js user1

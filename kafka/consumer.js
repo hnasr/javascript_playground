@@ -16,7 +16,7 @@ async function run(){
         console.log("Connected!")
         
         await consumer.subscribe({
-            "topic": "Users",
+            "topic": "MyUsers",
             "fromBeginning": true
         })
         
